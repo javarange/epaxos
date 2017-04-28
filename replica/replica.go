@@ -214,14 +214,15 @@ func New(param *Param) (*Replica, error) {
 
 	var path string
 	if param.PersistentPath == "" {
-		path = fmt.Sprintf("%s-%d", "/dev/shm/test", r.Id)
+		//path = fmt.Sprintf("%s-%d", "/dev/shm/test", r.Id)
+		path = fmt.Sprintf("%s-%d", "/tmp/shm/test", r.Id)
 	} else {
 		path = param.PersistentPath
 	}
 
 	r.store, err = persistent.NewLevelDB(path, param.Restore)
 	if err != nil {
-		glog.Errorln("replica.New: failed to make new storage")
+		glog.Errorln("replica.New: failed to make new storage:", path, err)
 		return nil, err
 	}
 
